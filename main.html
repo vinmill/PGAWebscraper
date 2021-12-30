@@ -1,0 +1,500 @@
+<!-- Import analysis -->
+<!-- Return various stats s variables -->
+<!-- Add some styling to the tabs and pages -->
+<!-- Create a home page with an image -->
+<!-- Create a page for each tournament plus an extra page. Each will contain data tables -->
+<!-- Loop through the list lists to return tables -->
+<!-- Add some javascript for the table functions -->
+<%
+import analysis
+
+masters = analysis.Winners(1, "Masters Tournament")
+theopen = analysis.Winners(1, "The Open Championship")
+pga = analysis.Winners(1, " PGA Championship")
+usopen = analysis.Winners(1, "U.S. Open")
+
+#second place finishes
+mastersT = analysis.Winners(2, "Masters Tournament")
+theopenT = analysis.Winners(2, "The Open Championship")
+pgaT = analysis.Winners(2, " PGA Championship")
+usopenT = analysis.Winners(2, "U.S. Open")
+
+tiger = analysis.PlayerWinnings("Tiger Woods")
+phil = analysis.PlayerWinnings("Phil Mickelson")
+sergio = analysis.PlayerWinnings("Sergio Garcia")
+ernie = analysis.PlayerWinnings("Ernie Els")
+dustin = analysis.PlayerWinnings("Dustin Johnson")
+rory = analysis.PlayerWinnings("Rory McIlroy")
+
+fourRD = analysis.AverageFourRoundScore()
+
+numcourses = analysis.numberOfCourses()
+
+courses = analysis.numberEachCourse()
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+body, html {
+  height: 100% auto;
+  margin: 0;
+  font-family: Helvetica;
+}
+
+.tablink {
+  background-color: mintcream;
+  color: #006B54;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 16.666%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.tabcontent {
+  color: mintcream;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Home {background-color: #006B54;}
+#TheMasters {background-color: #006B54;}
+#PGAChampionship {background-color: #006B54;}
+#TheUSOpen {background-color: #006B54;}
+#TheOpenChampionship {background-color: #006B54;}
+#MajorChampionshipStats {background-color: #006B54;}
+
+
+table {
+  border-spacing: 0;
+  width: 100%;
+  border: 5px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+  background-color: #555
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+}
+
+tr:nth-child(odd) {
+  background-color: #777;
+  color: black;
+}
+
+tr:nth-child(even) {
+  background-color: mintcream;
+  color: black;
+}
+</style>
+</head>
+<body>
+
+<button class="tablink" onclick="openPage('Home', this, '#ffdf00')" id="defaultOpen">Home</button>
+<button class="tablink" onclick="openPage('TheMasters', this, '#ffdf00')">The Masters</button>
+<button class="tablink" onclick="openPage('PGAChampionship', this, '#ffdf00')">PGA Championship</button>
+<button class="tablink" onclick="openPage('TheUSOpen', this, '#ffdf00')">The U.S. Open</button>
+<button class="tablink" onclick="openPage('TheOpenChampionship', this, '#ffdf00')">The Open Championship</button>
+<button class="tablink" onclick="openPage('MajorChampionshipStats', this, '#ffdf00')">Major Championship Stats</button>
+
+
+
+<div id="Home" class="tabcontent">
+  <h3>Welcome!</h3>
+  <p> </p>
+  <div class="row"> 
+        <div class="column">
+          <img src="https://www.golfchannel.com/sites/default/files/styles/lede/public/major_trophies_split_610.jpg?itok=Hw98KZXj" style="width: 65%">
+         </div>     
+    </div>  
+</div>
+
+
+<div id="TheMasters" class="tabcontent">
+  <h2>The Masters</h2>
+  <p>(Data since 1981)</p>
+  <p>"I’ve heard the winner of the Masters hosts the dinner. If I ever won it there would be no suits, no ties, and McDonalds." - <b>John Daly</b></p>
+  <h4>Winners</h4>
+  <table id="myTable">
+    <tr>
+            <th>Year</th>
+            <th>Player</th>
+            <th>Round 1</th>
+            <th>Round 2</th>
+            <th>Round 3</th>
+            <th>Round 4</th>
+            <th>Total</th>
+            <th>Par</th>
+            <th>Score To Par</th>
+            <th>Earnings</th>
+            <th>Purse</th>
+    </tr>
+    %for record in masters:
+    <tr>
+            <td>{{record[8]}}</td>
+            <td>{{record[0]}}</td>
+            <td>{{record[1]}}</td>
+            <td>{{record[2]}}</td>
+            <td>{{record[3]}}</td>
+            <td>{{record[4]}}</td>
+            <td>{{record[5]}}</td>
+            <td>{{record[6]}}</td>
+            <td>{{record[11]}}</td>
+            <td>${{record[7]}}</td>
+            <td>${{record[10]}}</td>
+    </tr>
+    %end
+  </table>
+  <h4>Runner-Ups</h4>
+  <table id="myTable">
+        <tr>
+            <th>Year</th>
+            <th>Player</th>
+            <th>Round 1</th>
+            <th>Round 2</th>
+            <th>Round 3</th>
+            <th>Round 4</th>
+            <th>Total</th>
+            <th>Par</th>
+            <th>Score To Par</th>
+            <th>Earnings</th>
+            <th>Purse</th>
+        </tr>
+        %for record in mastersT:
+        <tr>
+            <td>{{record[8]}}</td>
+            <td>{{record[0]}}</td>
+            <td>{{record[1]}}</td>
+            <td>{{record[2]}}</td>
+            <td>{{record[3]}}</td>
+            <td>{{record[4]}}</td>
+            <td>{{record[5]}}</td>
+            <td>{{record[6]}}</td>
+            <td>{{record[11]}}</td>
+            <td>${{record[7]}}</td>
+            <td>${{record[10]}}</td>
+            
+        </tr>
+        %end
+      </table>
+</div>
+
+<div id="PGAChampionship" class="tabcontent">
+  <h2>PGA Championship</h2>
+  <p>(Data since 1981)</p>
+  <h4>Winners</h4>
+  <table id="myTable">
+    <tr>
+        <th>Year</th>
+        <th>Player</th>
+        <th>Round 1</th>
+        <th>Round 2</th>
+        <th>Round 3</th>
+        <th>Round 4</th>
+        <th>Total</th>
+        <th>Par</th>
+        <th>Score To Par</th>
+        <th>Earnings</th>
+        <th>Course</th>
+        <th>Purse</th>
+    </tr>
+    %for record in pga:
+    <tr>
+            <td>{{record[8]}}</td>
+            <td>{{record[0]}}</td>
+            <td>{{record[1]}}</td>
+            <td>{{record[2]}}</td>
+            <td>{{record[3]}}</td>
+            <td>{{record[4]}}</td>
+            <td>{{record[5]}}</td>
+            <td>{{record[6]}}</td>
+            <td>{{record[11]}}</td>
+            <td>${{record[7]}}</td>
+            <td>{{record[9]}}</td>
+            <td>${{record[10]}}</td>
+    </tr>
+    %end
+  </table>
+  <h4>Runner-Ups</h4>
+  <table id="myTable">
+        <tr>
+                <th>Year</th>
+                <th>Player</th>
+                <th>Round 1</th>
+                <th>Round 2</th>
+                <th>Round 3</th>
+                <th>Round 4</th>
+                <th>Total</th>
+                <th>Par</th>
+                <th>Score To Par</th>
+                <th>Earnings</th>
+                <th>Course</th>
+                <th>Purse</th>
+        </tr>
+        %for record in pgaT:
+        <tr>
+                <td>{{record[8]}}</td>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+                <td>{{record[2]}}</td>
+                <td>{{record[3]}}</td>
+                <td>{{record[4]}}</td>
+                <td>{{record[5]}}</td>
+                <td>{{record[6]}}</td>
+                <td>{{record[11]}}</td>
+                <td>${{record[7]}}</td>
+                <td>{{record[9]}}</td>
+                <td>${{record[10]}}</td>
+        </tr>
+        %end
+      </table>
+</div>
+
+<div id="TheUSOpen" class="tabcontent">
+  <h2>The U.S. Open</h2>
+  <p>(Data since 1981)</p>
+  <h4>Winners</h4>
+  <table id="myTable">
+    <tr>
+            <th>Year</th>
+            <th>Player</th>
+            <th>Round 1</th>
+            <th>Round 2</th>
+            <th>Round 3</th>
+            <th>Round 4</th>
+            <th>Total</th>
+            <th>Par</th>
+            <th>Score To Par</th>
+            <th>Earnings</th>
+            <th>Course</th>
+            <th>Purse</th>
+    </tr>
+    %for record in usopen:
+    <tr>
+            <td>{{record[8]}}</td>
+            <td>{{record[0]}}</td>
+            <td>{{record[1]}}</td>
+            <td>{{record[2]}}</td>
+            <td>{{record[3]}}</td>
+            <td>{{record[4]}}</td>
+            <td>{{record[5]}}</td>
+            <td>{{record[6]}}</td>
+            <td>{{record[11]}}</td>
+            <td>${{record[7]}}</td>
+            <td>{{record[9]}}</td>
+            <td>${{record[10]}}</td>
+    </tr>
+    %end
+   </table>
+   <h4>Runner-Ups</h4>
+   <table id="myTable">
+        <tr>
+                <th>Year</th>
+                <th>Player</th>
+                <th>Round 1</th>
+                <th>Round 2</th>
+                <th>Round 3</th>
+                <th>Round 4</th>
+                <th>Total</th>
+                <th>Par</th>
+                <th>Score To Par</th>
+                <th>Earnings</th>
+                <th>Course</th>
+                <th>Purse</th>
+        </tr>
+        %for record in usopenT:
+        <tr>
+                <td>{{record[8]}}</td>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+                <td>{{record[2]}}</td>
+                <td>{{record[3]}}</td>
+                <td>{{record[4]}}</td>
+                <td>{{record[5]}}</td>
+                <td>{{record[6]}}</td>
+                <td>{{record[11]}}</td>
+                <td>${{record[7]}}</td>
+                <td>{{record[9]}}</td>
+                <td>${{record[10]}}</td>
+        </tr>
+        %end
+       </table>
+</div>
+
+<div id="TheOpenChampionship" class="tabcontent">
+    <h2>The Open Championship</h2>
+    <p>(Data since 1981)</p>
+    <h4>Winners</h4>
+    <table id="myTable">
+        <tr>
+            <th>Year</th>
+            <th>Player</th>
+            <th>Round 1</th>
+            <th>Round 2</th>
+            <th>Round 3</th>
+            <th>Round 4</th>
+            <th>Total</th>
+            <th>Par</th>
+            <th>Score To Par</th>
+            <th>Earnings</th>
+            <th>Course</th>
+            <th>Purse</th>
+        </tr>
+        %for record in theopen:
+        <tr>
+                <td>{{record[8]}}</td>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+                <td>{{record[2]}}</td>
+                <td>{{record[3]}}</td>
+                <td>{{record[4]}}</td>
+                <td>{{record[5]}}</td>
+                <td>{{record[6]}}</td>
+                <td>{{record[11]}}</td>
+                <td>${{record[7]}}</td>
+                <td>{{record[9]}}</td>
+                <td>${{record[10]}}</td>
+        </tr>
+        %end
+    </table>
+    <h4>Runner-Ups</h4>
+    <table id="myTable">
+            <tr>
+                <th>Year</th>
+                <th>Player</th>
+                <th>Round 1</th>
+                <th>Round 2</th>
+                <th>Round 3</th>
+                <th>Round 4</th>
+                <th>Total</th>
+                <th>Par</th>
+                <th>Score To Par</th>
+                <th>Earnings</th>
+                <th>Course</th>
+                <th>Purse</th>
+            </tr>
+            %for record in theopenT:
+            <tr>
+                <td>{{record[8]}}</td>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+                <td>{{record[2]}}</td>
+                <td>{{record[3]}}</td>
+                <td>{{record[4]}}</td>
+                <td>{{record[5]}}</td>
+                <td>{{record[6]}}</td>
+                <td>{{record[11]}}</td>
+                <td>${{record[7]}}</td>
+                <td>{{record[9]}}</td>
+                <td>${{record[10]}}</td>
+            </tr>
+            %end
+        </table>
+  </div>
+  
+<div id="MajorChampionshipStats" class="tabcontent">
+    <h2>Major Championship Stats</h2>
+    <p>(Data since 1981)</p>
+    <h4>Total Number of Courses to Host a Major</h4>
+    <p>     number = {{numcourses}}</p>
+    <h4>Number of Majors Hosted per Site</h4>
+    <table id="myTable">
+            <tr>
+                <th>Course</th>
+                <th>Number of Majors</th>
+            </tr>
+            %for record in courses:
+            <tr>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+            </tr>
+            %end
+        </table>
+    <h4>Average Four Day Score for each Tournament</h4>
+    <table id="myTable">
+            <tr>
+                <th>Tournament</th>
+                <th>Average Four Day Score</th>
+                <th>Average Course Par</th>
+                <th>Average Score to Par</th>
+            </tr>
+            %for record in fourRD:
+            <tr>
+                <td>{{record[0]}}</td>
+                <td>{{record[1]}}</td>
+                <td>{{record[2]}}</td>
+                <td>{{record[3]}}</td>
+            </tr>
+            %end
+        </table>
+    <h4></h4>
+    <h4>Total Earnings in Major Championship Appearances</h4>
+    <table id="myTable">
+        <tr>
+          <th>Name</th>
+          <th>Purse</th>
+        </tr>
+        <tr>
+          <td>Tiger Woods</td>
+          <td>${{tiger}}</td>
+        </tr>
+        <tr>
+          <td>Phil Mickelson</td>
+          <td>${{phil}}</td>
+        </tr>
+        <tr>
+            <td>Ernie Els</td>
+            <td>${{ernie}}</td>
+        </tr>
+        <tr>
+          <td>Rory McIlroy</td>
+          <td>${{rory}}</td>
+        </tr>
+        <tr>
+            <td>Sergio Garcia</td>
+            <td>${{sergio}}</td>
+        </tr>
+        <tr>
+            <td>Dustin Johnson</td>
+            <td>${{dustin}}</td>
+        </tr>
+      </table>
+</div>
+<script>
+  
+function openPage(pageName,elmnt,color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+}
+  
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html> 
